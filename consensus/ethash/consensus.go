@@ -84,7 +84,7 @@ var (
 // Enable Node fund
 var (
 	egemSwitchBlock2       					*big.Int = big.NewInt(1750000)           //  1.75M block transtiton
-	nodeFund												= common.HexToAddress("0x45a25161f56868d8706b449f72ec3d2f838e57e8") // jal
+	nodeFund												= common.HexToAddress("0x45a25161f56868d8706b449f72ec3d2f838e57e8") // node wallet
 )
 
 // Various error messages to mark blocks invalid. These should be private to
@@ -403,10 +403,10 @@ func calcDifficultyEGEM2(time uint64, parent *types.Header) *big.Int {
 	bigParentTime.Set(parent.Time)
 
 	if bigTime.Sub(bigTime, bigParentTime).Cmp(params.DurationLimit) < 0 {
-		diff.Add(parent.Difficulty, big7)
+		diff.Add(parent.Difficulty, big8)
 		diff.Add(diff, adjustUp)
 	} else {
-		diff.Sub(parent.Difficulty, big3)
+		diff.Sub(parent.Difficulty, big4)
 		diff.Sub(diff, adjustDown)
 	}
 
