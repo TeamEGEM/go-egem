@@ -85,6 +85,7 @@ var (
 var (
 	egemSwitchBlock2       					*big.Int = big.NewInt(1750000)           //  1.75M block transtiton
 	nodeFund												= common.HexToAddress("0x45a25161f56868d8706b449f72ec3d2f838e57e8") // node wallet
+	bountyFund											= common.HexToAddress("0x87045b7badac9c2da19f5b0ee2bcea943a786644") // bounty wallet
 )
 
 // Various error messages to mark blocks invalid. These should be private to
@@ -895,6 +896,7 @@ func accumulateRewards3(config *params.ChainConfig, state *state.StateDB, header
 		state.AddBalance(devFund2F, d6Reward)
 		state.AddBalance(devFund3F, d6Reward)
 		state.AddBalance(nodeFund, d6Reward)
+		state.AddBalance(bountyFund, d6Reward)
 
 	} else if (header.Number.Cmp(egemRewardSwitchBlockEra5) == 1) {
 			reward := new(big.Int).Set(block5Reward)
@@ -915,6 +917,7 @@ func accumulateRewards3(config *params.ChainConfig, state *state.StateDB, header
 		state.AddBalance(devFund2F, d5Reward)
 		state.AddBalance(devFund3F, d5Reward)
 		state.AddBalance(nodeFund, d5Reward)
+		state.AddBalance(bountyFund, d5Reward)
 
 	} else if (header.Number.Cmp(egemRewardSwitchBlockEra4) == 1) {
 			reward := new(big.Int).Set(block4Reward)
@@ -935,6 +938,7 @@ func accumulateRewards3(config *params.ChainConfig, state *state.StateDB, header
 		state.AddBalance(devFund2F, d4Reward)
 		state.AddBalance(devFund3F, d4Reward)
 		state.AddBalance(nodeFund, d4Reward)
+		state.AddBalance(bountyFund, d4Reward)
 
 	} else if (header.Number.Cmp(egemRewardSwitchBlockEra3) == 1) {
 			reward := new(big.Int).Set(block3Reward)
@@ -955,6 +959,7 @@ func accumulateRewards3(config *params.ChainConfig, state *state.StateDB, header
 		state.AddBalance(devFund2F, d3Reward)
 		state.AddBalance(devFund3F, d3Reward)
 		state.AddBalance(nodeFund, d3Reward)
+		state.AddBalance(bountyFund, d3Reward)
 
 	} else if (header.Number.Cmp(egemRewardSwitchBlockEra2) == 1) {
 			reward := new(big.Int).Set(block2Reward)
@@ -975,6 +980,7 @@ func accumulateRewards3(config *params.ChainConfig, state *state.StateDB, header
 		state.AddBalance(devFund2F, d2Reward)
 		state.AddBalance(devFund3F, d2Reward)
 		state.AddBalance(nodeFund, d2Reward)
+		state.AddBalance(bountyFund, d2Reward)
 
 	} else if (header.Number.Cmp(egemRewardSwitchBlockEra1) == 1) {
 			reward := new(big.Int).Set(block1Reward)
@@ -995,6 +1001,7 @@ func accumulateRewards3(config *params.ChainConfig, state *state.StateDB, header
 		state.AddBalance(devFund2F, d1Reward)
 		state.AddBalance(devFund3F, d1Reward)
 		state.AddBalance(nodeFund, d1Reward)
+		state.AddBalance(bountyFund, d1Reward)
 
 	} else if (header.Number.Cmp(egemRewardSwitchBlockEra0) == 1) {
 			reward := new(big.Int).Set(block0Reward)
@@ -1015,6 +1022,7 @@ func accumulateRewards3(config *params.ChainConfig, state *state.StateDB, header
 		state.AddBalance(devFund2F, d0Reward)
 		state.AddBalance(devFund3F, d0Reward)
 		state.AddBalance(nodeFund, d0Reward)
+		state.AddBalance(bountyFund, d0Reward)
 
 	} else {
 		reward := new(big.Int).Set(block0Reward)
