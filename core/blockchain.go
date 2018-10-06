@@ -130,7 +130,7 @@ type BlockChain struct {
 
 	badBlocks *lru.Cache // Bad block cache
 
-	
+
 	atxi *AtxiT // (issue #58)
 }
 
@@ -202,10 +202,12 @@ func NewBlockChain(db ethdb.Database, cacheConfig *CacheConfig, chainConfig *par
 func (bc *BlockChain) SetAtxi(a *AtxiT) {
 	bc.atxi = a
 }
+
 // GetAtxi return indexes db and if atx index in use.
 func (bc *BlockChain) GetAtxi() *AtxiT {
 	return bc.atxi
 }
+
 func (bc *BlockChain) getProcInterrupt() bool {
 	return atomic.LoadInt32(&bc.procInterrupt) == 1
 }
@@ -1396,9 +1398,7 @@ func (bc *BlockChain) reorg(oldBlock, newBlock *types.Block) error {
 		// insert the block in the canonical way, re-writing history
 		bc.insert(newChain[i])
 		// write lookup entries for hash based transaction/receipt searches
-		if err := WriteTxLookupEntries(bc.db, newChain[i]); err != nil {
-			return err
-		}
+		rawdb.WriteTxLookupEntries(bc.db, newChain[i])
 		// Store the addr-tx indexes if enabled
 		if bc.atxi != nil {
 			if err := WriteBlockAddTxIndexes(bc.Config(), bc.atxi.Db, newChain[i]); err != nil {
@@ -1420,7 +1420,7 @@ func (bc *BlockChain) reorg(oldBlock, newBlock *types.Block) error {
 	// When transactions get deleted from the database that means the
 	// receipts that were created in the fork must also be deleted
 	for _, tx := range diff {
-		DeleteTxLookupEntry(bc.db, tx.Hash())
+		rawdb.DeleteTxLookupEntry(bc.db, tx.Hash())
 	}
 	if len(deletedLogs) > 0 {
 		go bc.rmLogsFeed.Send(RemovedLogsEvent{deletedLogs})
