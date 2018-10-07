@@ -38,10 +38,7 @@ import (
 var (
 	maxUncles                       = 2                 // Maximum number of uncles allowed in a single block
 	allowedFutureBlockTime          = 15 * time.Second  // Max time from current time allowed for blocks, before they're considered future blocks
-	FrontierBlockReward    					*big.Int = big.NewInt(5e+18) // Not used will be removed in furture EGEM update.
-	ByzantiumBlockReward   					*big.Int = big.NewInt(3e+18) // Not used will be removed in furture EGEM update.
 )
-
 //  EGEM Variables
 var (
 	egem0BlockReward                *big.Int = big.NewInt(8e+18)              //  8 EGEM Block reward in wei for successfully mining a block.     (ERA0)
@@ -70,7 +67,6 @@ var (
 	devFund2												= common.HexToAddress("0x0666bf13ab1902de7dee4f8193c819118d7e21a6") // invalid as of block 350k
 	devFund3 												= common.HexToAddress("0xcEf0890408b4FC0DC025c8F581c77383529D38B6") // invalid as of block 350k
 )
-
 // Fork Variables
 // Moves funds to multisigs.
 var (
@@ -80,10 +76,9 @@ var (
 	devFund2F												= common.HexToAddress("0x2025ed239a8dec4de0034a252d5c5e385b73fcd0") // osoese
 	devFund3F												= common.HexToAddress("0xe485aA04bb231f331B85BF64614737c6495CC4b3") // jal
 )
-
 // Enable Node fund
 var (
-	egemSwitchBlock2       					*big.Int = big.NewInt(1750000)           //  1.75M block transtiton
+	egemSwitchBlock2       					*big.Int = big.NewInt(2000000)           //  needs voting on when to enable set to 2 million for now.
 	nodeFund												= common.HexToAddress("0x45a25161f56868d8706b449f72ec3d2f838e57e8") // node wallet
 	bountyFund											= common.HexToAddress("0x87045b7badac9c2da19f5b0ee2bcea943a786644") // bounty wallet
 )
@@ -103,7 +98,6 @@ var (
 	errInvalidMixDigest  = errors.New("invalid mix digest")
 	errInvalidPoW        = errors.New("invalid proof-of-work")
 )
-
 // Author implements consensus.Engine, returning the header's coinbase as the
 // proof-of-work verified author of the block.
 func (ethash *Ethash) Author(header *types.Header) (common.Address, error) {
