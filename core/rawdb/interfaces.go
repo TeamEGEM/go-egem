@@ -1,4 +1,4 @@
-// Copyright 2016 The go-ethereum Authors
+// Copyright 2018 The go-ethereum Authors
 // This file is part of the go-ethereum library.
 //
 // The go-ethereum library is free software: you can redistribute it and/or modify
@@ -14,32 +14,20 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with the go-ethereum library. If not, see <http://www.gnu.org/licenses/>.
 
-package params
+package rawdb
 
-import (
-	"fmt"
-)
+// DatabaseReader wraps the Has and Get method of a backing data store.
+type DatabaseReader interface {
+	Has(key []byte) (bool, error)
+	Get(key []byte) ([]byte, error)
+}
 
-const (
-	VersionMajor = 1          // Major version component of the current release
-	VersionMinor = 0          // Minor version component of the current release
-	VersionPatch = 4          // Patch version component of the current release
-	VersionMeta  = "nikola"   // Version metadata to append to the version string
-)
+// DatabaseWriter wraps the Put method of a backing data store.
+type DatabaseWriter interface {
+	Put(key []byte, value []byte) error
+}
 
-// Version holds the textual version string.
-var Version = func() string {
-	v := fmt.Sprintf("%d.%d.%d", VersionMajor, VersionMinor, VersionPatch)
-	if VersionMeta != "" {
-		v += "-" + VersionMeta
-	}
-	return v
-}()
-
-func VersionWithCommit(gitCommit string) string {
-	vsn := Version
-	if len(gitCommit) >= 8 {
-		vsn += "-" + gitCommit[:8]
-	}
-	return vsn
+// DatabaseDeleter wraps the Delete method of a backing data store.
+type DatabaseDeleter interface {
+	Delete(key []byte) error
 }

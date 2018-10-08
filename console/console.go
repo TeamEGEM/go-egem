@@ -272,14 +272,6 @@ func (c *Console) AutoCompleteInput(line string, pos int) (string, []string, str
 // Welcome show summary of current Geth instance and some metadata about the
 // console's available modules.
 func (c *Console) Welcome() {
-	// Print some generic Geth metadata
-	fmt.Fprintf(c.printer, "Welcome to the Geth JavaScript console!\n\n")
-	c.jsre.Run(`
-		console.log("instance: " + web3.version.node);
-		console.log("coinbase: " + eth.coinbase);
-		console.log("at block: " + eth.blockNumber + " (" + new Date(1000 * eth.getBlock(eth.blockNumber).timestamp) + ")");
-		console.log(" datadir: " + admin.datadir);
-	`)
 	// List all the supported modules for the user to call
 	if apis, err := c.client.SupportedModules(); err == nil {
 		modules := make([]string, 0, len(apis))
@@ -287,9 +279,19 @@ func (c *Console) Welcome() {
 			modules = append(modules, fmt.Sprintf("%s:%s", api, version))
 		}
 		sort.Strings(modules)
-		fmt.Fprintln(c.printer, " modules:", strings.Join(modules, " "))
+		fmt.Fprintln(c.printer, " Modules:", strings.Join(modules, " "))
 	}
 	fmt.Fprintln(c.printer)
+	// Print some generic Geth metadata
+	fmt.Fprintf(c.printer, "Welcome to the interactive EGEM console! \n\n")
+	c.jsre.Run(`
+		console.log("Website: " + "https://egem.io" + " - " + "Explorer: " + "https://explorer.egem.io");
+		console.log("Version Data: " + web3.version.node);
+		console.log("Coinbase: " + eth.coinbase);
+		console.log("Last Known Block: " + eth.blockNumber + " (" + new Date(1000 * eth.getBlock(eth.blockNumber).timestamp) + ")");
+		console.log("Datadir: " + admin.datadir + "\n\n");
+		console.log("Console: " + "Please enter a command to explore the EGEM network.");
+	`)
 }
 
 // Evaluate executes code and pretty prints the result to the specified output
