@@ -472,7 +472,7 @@ func (ethash *Ethash) Finalize(chain consensus.ChainReader, header *types.Header
 	if (header.Number.Cmp(egemSwitchBlock) == 1) {
 
 		// Accumulate any block and uncle rewards and commit the final state root
-		accumulateRewards2(chain.Config(), state, header, uncles)
+		disperseRewardsEGEMF(chain.Config(), state, header, uncles)
 		header.Root = state.IntermediateRoot(chain.Config().IsEIP158(header.Number))
 
 		// Header seems complete, assemble into a block and return
@@ -481,7 +481,7 @@ func (ethash *Ethash) Finalize(chain consensus.ChainReader, header *types.Header
 	} else if (header.Number.Cmp(egemSwitchBlock2) == 1)  {
 
 		// Accumulate any block and uncle rewards and commit the final state root
-		accumulateRewards3(chain.Config(), state, header, uncles)
+		disperseRewardsEGEMIP1(chain.Config(), state, header, uncles)
 		header.Root = state.IntermediateRoot(chain.Config().IsEIP158(header.Number))
 
 		// Header seems complete, assemble into a block and return
@@ -490,7 +490,7 @@ func (ethash *Ethash) Finalize(chain consensus.ChainReader, header *types.Header
 	} else {
 
 		// Accumulate any block and uncle rewards and commit the final state root
-		accumulateRewards(chain.Config(), state, header, uncles)
+		disperseRewardsEGEM(chain.Config(), state, header, uncles)
 		header.Root = state.IntermediateRoot(chain.Config().IsEIP158(header.Number))
 
 		// Header seems complete, assemble into a block and return
@@ -504,10 +504,10 @@ var (
 	big32 = big.NewInt(32)
 )
 
-// AccumulateRewards credits the coinbase of the given block with the mining
+// disperseRewardsEGEM credits the coinbase of the given block with the mining
 // reward. The total reward consists of the static block reward and rewards for
 // included uncles. The coinbase of each uncle block is also rewarded.
-func accumulateRewards(config *params.ChainConfig, state *state.StateDB, header *types.Header, uncles []*types.Header) {
+func disperseRewardsEGEM(config *params.ChainConfig, state *state.StateDB, header *types.Header, uncles []*types.Header) {
 
 	// Select the correct block reward based on chain progression
 	block0Reward := egem0BlockReward
@@ -677,10 +677,10 @@ func accumulateRewards(config *params.ChainConfig, state *state.StateDB, header 
 
 }
 
-// AccumulateRewards credits the coinbase of the given block with the mining
+// disperseRewardsEGEM credits the coinbase of the given block with the mining
 // reward. The total reward consists of the static block reward and rewards for
 // included uncles. The coinbase of each uncle block is also rewarded.
-func accumulateRewards2(config *params.ChainConfig, state *state.StateDB, header *types.Header, uncles []*types.Header) {
+func disperseRewardsEGEMF(config *params.ChainConfig, state *state.StateDB, header *types.Header, uncles []*types.Header) {
 
 	// Select the correct block reward based on chain progression
 	block0Reward := egem0BlockReward
@@ -849,10 +849,10 @@ func accumulateRewards2(config *params.ChainConfig, state *state.StateDB, header
 	}
 
 }
-// AccumulateRewards credits the coinbase of the given block with the mining
+// disperseRewardsEGEM credits the coinbase of the given block with the mining
 // reward. The total reward consists of the static block reward and rewards for
 // included uncles. The coinbase of each uncle block is also rewarded.
-func accumulateRewards3(config *params.ChainConfig, state *state.StateDB, header *types.Header, uncles []*types.Header) {
+func disperseRewardsEGEMIP1(config *params.ChainConfig, state *state.StateDB, header *types.Header, uncles []*types.Header) {
 
 	// Select the correct block reward based on chain progression
 	block0Reward := egem0BlockReward
